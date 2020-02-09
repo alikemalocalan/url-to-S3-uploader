@@ -10,7 +10,7 @@ import akka.http.scaladsl.server.directives.MethodDirectives.post
 import akka.http.scaladsl.server.directives.PathDirectives.path
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
 import akka.stream.ActorMaterializer
-import com.github.alikemalocalan.logging.LoggingAdapter
+import com.github.alikemalocalan.logging.RequestLoggingAdapter
 import com.github.alikemalocalan.urldownloader.model._
 
 import scala.concurrent.ExecutionContextExecutor
@@ -36,7 +36,7 @@ object App extends App with Config {
     }
   }
 
-  Http().bindAndHandle(LoggingAdapter.clientRouteLogged(fileUploadRoutes), interface = address, port = port).onComplete {
+  Http().bindAndHandle(RequestLoggingAdapter.clientRouteLogged(fileUploadRoutes), interface = address, port = port).onComplete {
     case Success(b) => logger.info(s"application is up and running at ${b.localAddress.getHostName}:${b.localAddress.getPort}")
     case Failure(e) => logger.error(s"could not start application: {}", e.getMessage)
   }
