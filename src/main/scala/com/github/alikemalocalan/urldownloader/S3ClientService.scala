@@ -2,6 +2,7 @@ package com.github.alikemalocalan.urldownloader
 
 import java.io.File
 
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.amazonaws.services.s3.model._
@@ -21,6 +22,7 @@ object S3ClientService extends Config {
 
   val clientRegion: Regions = Regions.US_EAST_1
   val s3Client = AmazonS3ClientBuilder.standard()
+    .withCredentials(new EnvironmentVariableCredentialsProvider())
     .withPathStyleAccessEnabled(true)
     .withChunkedEncodingDisabled(false)
     .withRegion(clientRegion)
